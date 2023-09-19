@@ -1,7 +1,7 @@
 const PhoneBook = ({addNewPerson,newName,handleChange,newNumber,handleNumber})=>{
     return(
       <>
-      <h2>Phonebook</h2>
+      <h2>Phonebook !</h2>
       <form onSubmit={addNewPerson}>
         <div>
           name: <input value={newName} onChange={handleChange}/>
