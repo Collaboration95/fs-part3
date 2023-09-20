@@ -8,5 +8,5 @@
 # }
 
 
-DELETE http://localhost:3001/api/persons/delete/650ada65bb738118346ed3f5
-# GET http://localhost:3001/api/persons/650ab741b4d8d61cdb09162d
+# DELETE http://localhost:3001/api/persons/delete/650ada65bb738118346ed3f5
+GET http://localhost:3001/api/persons/650a7f19c22efeadf48ec965

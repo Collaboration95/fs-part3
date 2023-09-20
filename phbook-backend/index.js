@@ -127,21 +127,20 @@ app.get('/api/persons/:id', (request, response,next) => {
   })
   .catch(error => next(error))
 })
-// app.put('/api/persons/:id', (request, response, next) => {
-//   const body = request.body
+app.put('/api/persons/:id', (request, response, next) => {
+  const body = request.body
+  const entry = {
+    name: body.name,
+    number: body.number,
+    id:generateId(),
+  }
 
-//   const entry = {
-//     name: body.name,
-//     number: body.number,
-//     id:generateId(),
-//   }
-//   console.log(request.params.id)
-//  Entry.findByIdAndUpdate(request.params.id, entry, { new: true })
-//     .then(updatedNote => {
-//       response.json(updatedNote)
-//     })
-//     .catch(error => next(error))
-// })
+ Entry.findByIdAndUpdate(String(request.params.id), entry, { new: true })
+    .then(updatedNote => {
+      response.json(updatedNote)
+    })
+    .catch(error => next(error))
+})
 
 const errorHandler = (error, request, response, next) => {
   console.error(error.message)
