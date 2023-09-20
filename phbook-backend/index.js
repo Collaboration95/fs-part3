@@ -55,8 +55,11 @@ app.get('/api/persons',(request,response)=>{
 
 app.get('/info',(request,response)=>{
     const date = new Date()
-    response.send(`<div><p>Phonebook has info for ${persons.length} people</p>
-                    <p>${date}</p></div>`)
+    Entry.find({}).then(result => {
+      response.send(`<div><p>Phonebook has info for ${result.length} people</p>
+      <p>${date}</p></div>`)
+      })
+    
 }
 )
 app.delete('/api/persons/delete/:id', (request, response) => {
@@ -89,30 +92,7 @@ const generateId = () => {
     entry.save().then(savedEntry => {
     response.json(savedEntry)
     })
-    
-    // // Comment
-    // if (!body.name) {
-    //   return response.status(400).json({ 
-    //     error: 'content missing' 
-    //   })
-    // }
-    // const personName = persons.find(note => note.name === body.name)
-    // if(personName){
-    //     return response.status(400).json({
-    //         error: 'name must be unique'
-    //     })
-    // }
-  
-    // const person = {
-    //   name:body.name,
-    //   number:body.number,
-    //   id: generateId()
-    // }
-  
-    // persons = persons.concat(person)
-  
-    // response.json(persons)
-  })
+      })
 
 app.get('/api/persons/:id', (request, response) => {
   const id =Number(request.params.id);
