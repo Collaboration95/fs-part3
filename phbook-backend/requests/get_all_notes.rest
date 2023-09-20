@@ -1,14 +1,8 @@
-GET https://fs-part3.onrender.com/api/persons
-
-# GET https://fs-part3.onrender.com/info 
-
-
-# # GET https://fs-part3.onrender.com/api/persons/3
-
 # POST https://fs-part3.onrender.com/api/persons
-# Content-Type: application/json
+POST http://localhost:3001/api/persons
+Content-Type: application/json
 
-# {
-#   "name": "This is a new note",
-#   "number": "8928292 232"
-# }
+{
+  "name": "NewName",
+  "number": "83928292 232"
+}

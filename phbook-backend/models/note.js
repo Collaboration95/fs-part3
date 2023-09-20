@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
 
 const password = process.env.MONGODB_URI
+
 const url = `mongodb+srv://sample:${password}@cluster1.xnqmntb.mongodb.net?w=majority&retryWrites=true`
 console.log('connecting to', url)
 
