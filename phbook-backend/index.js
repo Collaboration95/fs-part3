@@ -81,7 +81,8 @@ const generateId = () => {
       })
     }
     const entry = new Entry({
-    content: body.content,
+    name: body.name,
+    number: body.number,
     id: generateId(),
     })
 
