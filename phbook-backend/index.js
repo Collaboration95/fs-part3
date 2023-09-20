@@ -1,13 +1,18 @@
+const mongoose = require('mongoose')
 const express = require('express');
+require('dotenv').config()
+const Entry = require('./models/note')
 const morgan = require('morgan');
 const app = express()
 const cors = require('cors')
 app.use(cors())
 app.use(express.json())
+
 app.use(express.static('dist'))
 
 morgan.token('body', function (req, res) { return JSON.stringify(req.body) })
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
+
 let persons = [
   { 
     "id": 1,
@@ -31,12 +36,21 @@ let persons = [
   }
 ]
 
+// const entry = new Entry({
+//   name: name,
+//   number: number,
+//   id: generateId(),
+// })
+
 app.get('/', (request, response) => {
     response.send('<h1>Hello World!</h1>')
     })
 
 app.get('/api/persons',(request,response)=>{
-    response.json(persons)
+    Entry.find({}).then(result => {
+        response.json(result)
+      })
+      // mongoose.connection.close()
 })
 
 app.get('/info',(request,response)=>{
@@ -59,39 +73,56 @@ const generateId = () => {
   
   app.post('/api/persons', (request, response) => {
     const body = request.body
-  console.log(body)
-    if (!body.name) {
-      return response.status(400).json({ 
-        error: 'content missing' 
+  
+    if (body.conent === undefined) {
+      return response.status(400).json({
+        error: 'content missing'
       })
     }
-    const personName = persons.find(note => note.name === body.name)
-    if(personName){
-        return response.status(400).json({
-            error: 'name must be unique'
-        })
-    }
+    const entry = new Entry({
+    content: body.content,
+    id: generateId(),
+    })
+
+    entry.save().then(savedEntry => {
+    response.json(savedEntry)
+    })
+    
+    // // Comment
+    // if (!body.name) {
+    //   return response.status(400).json({ 
+    //     error: 'content missing' 
+    //   })
+    // }
+    // const personName = persons.find(note => note.name === body.name)
+    // if(personName){
+    //     return response.status(400).json({
+    //         error: 'name must be unique'
+    //     })
+    // }
   
-    const person = {
-      name:body.name,
-      number:body.number,
-      id: generateId()
-    }
+    // const person = {
+    //   name:body.name,
+    //   number:body.number,
+    //   id: generateId()
+    // }
   
-    persons = persons.concat(person)
+    // persons = persons.concat(person)
   
-    response.json(persons)
+    // response.json(persons)
   })
 
 app.get('/api/persons/:id', (request, response) => {
-    const id =Number(request.params.id);
-    const person =persons.find(note => note.id === id)
-    if(person){
-        response.json(person)
-    } else{
-        response.status(404).end()
+  const id =Number(request.params.id);
+  Entry.findById(id).then(entry => {
+    if (entry) {
+      // response.json(entry)
+      response.json("entry")
     }
-   
+    else {
+    console.log("entry not found")
+    }
+  })
   })
   
 const PORT =process.env.PORT || 3001
