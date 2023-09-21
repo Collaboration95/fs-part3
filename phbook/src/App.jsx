@@ -40,8 +40,6 @@ const App = () => {
             setPersons(persons.map(person=>person.id!=isExist[0].id?person:newPerson))
             setNewName('')
             setNumber('')
-
-
             setTimeout(() => {
               setErrorMessage(null)
             }, 3000)
