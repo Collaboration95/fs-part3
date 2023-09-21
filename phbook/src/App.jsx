@@ -5,7 +5,7 @@ import PhoneBook from './components/personform'
 import { v4 as uuidv4 } from 'uuid';
 import Notification from './components/notifications'
 import Persons from './components/persons'
-import personService from './services/persons'
+import personService from '../../controllers/persons'
 import "./index.css"
 const App = () => {
 
