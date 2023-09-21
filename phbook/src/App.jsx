@@ -37,6 +37,11 @@ const App = () => {
         .then(response=>{
           if(response.status===200){
             setErrorMessage(`Updated ${newName}`)
+            setPersons(persons.map(person=>person.id!=isExist[0].id?person:newPerson))
+            setNewName('')
+            setNumber('')
+
+
             setTimeout(() => {
               setErrorMessage(null)
             }, 3000)
@@ -48,9 +53,6 @@ const App = () => {
           }, 3000)
         }
         )
-        setPersons(persons.map(person=>person.id!=isExist[0].id?person:newPerson))
-        setNewName('')
-        setNumber('')
       }
       return;
     }
@@ -60,16 +62,24 @@ const App = () => {
     .then(response=>{
       if(response.status===201){
         setErrorMessage(`Added ${newName}`)
+        setPersons(persons.
+          concat(newPerson))
+        setNewName('')
+        setNumber('')
+        
         setTimeout(() => {
           setErrorMessage(null)
         }, 3000)
+
       }
     })
-    setPersons(persons.
-      concat(newPerson))
-    setNewName('')
-    setNumber('')
-    console.log(persons)
+    .catch(error=>{
+      setErrorMessage(error.response.data.error)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 3000)
+    })
+
   }
 
   const addNewFilter = (event)=>{

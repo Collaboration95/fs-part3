@@ -17,11 +17,24 @@ mongoose.connect(url)
 
 
   const entrySchema = new mongoose.Schema({
-    name: String,
-    number: String,
+    name: {
+      type: String,
+      minlength: 3,
+      required: true,
+    },
+    number: {
+      type: String,
+      validate: {
+        validator: function (value) {
+          // Regular expression to validate the phone number format
+          return /^(\d{2,3}-\d+)$/.test(value);
+        },
+        message: 'Phone number must be in the format xx-xxxxxxx or xxx-xxxxxxxx.',
+      },
+      required: true,
+    },
     id: Number,
-  })
-
+  });
   entrySchema.set('toJSON',{
     transform:(document,returnedObject)=>{
       returnedObject.id = returnedObject._id.toString()
