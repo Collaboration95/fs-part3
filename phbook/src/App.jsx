@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import React, { useEffect } from 'react'
+import  { useEffect } from 'react'
 import Filter from './components/Filter'
 import PhoneBook from './components/personform'
 import { v4 as uuidv4 } from 'uuid';
@@ -44,11 +44,21 @@ const App = () => {
               setErrorMessage(null)
             }, 3000)
           }
-        }).catch(error=>{
-          setErrorMessage(`Information of ${newName} has already been removed from server`)
+        }).catch((error)=>{
+          if(error.response.status===404)
+          {    setErrorMessage(`Information of ${newName} has already been removed from server`)
           setTimeout(() => {
             setErrorMessage(null)
           }, 3000)
+          }
+          else if(error.response.status===400){
+            setErrorMessage(error.response.data.error)
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 3000)
+          }
+          
+      
         }
         )
       }
